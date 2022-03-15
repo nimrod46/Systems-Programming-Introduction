@@ -48,10 +48,6 @@ void is_arithmetic_progression() {
     }
 }
 
-int min(int a, int b) {
-    return a < b ? a : b;
-}
-
 void ascii_art() {
     int input;
     printf("Would you like to draw a square (1) or a diamond (2)? ");
@@ -81,7 +77,7 @@ void ascii_art() {
         }
         for (int i = 0; i < diagonal_size; ++i) {
             int spaces = abs(diagonal_size / 2 - i);
-            for (int j = 0; j < abs(diagonal_size / 2 - i); ++j) {
+            for (int j = 0; j < spaces; ++j) {
                 printf(" ");
             }
 
