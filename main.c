@@ -71,7 +71,7 @@ void ascii_art() {
         int diagonal_size;
         printf("What should be the diagonal size? (odd, 1-29): ");
         scanf("%d", &diagonal_size);
-        if (diagonal_size < 1 || diagonal_size > 29 | diagonal_size % 2 == 0) {
+        if (diagonal_size < 1 || diagonal_size > 29 || diagonal_size % 2 == 0) {
             printf("Wrong choice! good bye");
             exit(0);
         }
