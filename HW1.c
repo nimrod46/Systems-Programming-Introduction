@@ -93,10 +93,10 @@ void ascii_art() {
     }
 }
 
-int main() {
-    srand(time(NULL));
-    //setbuf(stdout, NULL);
-    ascii_art();
-    return 0;
-}
+//int main() {
+//    srand(time(NULL));
+//    //setbuf(stdout, NULL);
+//    ascii_art();
+//    return 0;
+//}
 
