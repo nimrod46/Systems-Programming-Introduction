@@ -9,16 +9,16 @@ char my_toupper(char c) {
     return c;
 }
 
-void main() {
-    setbuf(stdout, NULL);
-    char c;
-    int chars[26] = {0};
-    printf("Enter text: ");
-    while ((c = getchar()) != EOF && c != '\n') {
-        chars[my_toupper(c) - 'A']++;
-    }
-
-    for (int i = 0; i < 26; ++i) {
-        printf("%c      %d\n", 'A' + i, chars[i]);
-    }
-}
+//void main() {
+//    setbuf(stdout, NULL);
+//    char c;
+//    int chars[26] = {0};
+//    printf("Enter text: ");
+//    while ((c = getchar()) != EOF && c != '\n') {
+//        chars[my_toupper(c) - 'A']++;
+//    }
+//
+//    for (int i = 0; i < 26; ++i) {
+//        printf("%c      %d\n", 'A' + i, chars[i]);
+//    }
+//}
