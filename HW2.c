@@ -22,7 +22,7 @@ bool is_legal_email_length(unsigned long size);
  * Finds and validates that the at sign (@) appears only once
  * @param email_to_check email as char array to validate
  * @param size length of the email address
- * @return at sign index if at sign exists one, otherwise 0
+ * @return The at sign index if at sign exists one, otherwise 0
  */
 int get_at_sign_index(const char *email_to_check, unsigned long size);
 
@@ -76,6 +76,7 @@ int sum_n(const int *array, int size, int target) {
     }
     return count;
 }
+
 /**
  * Removes all zeros from the array, this function will remove zeros from the given array without effecting the order
  * @param array int array
@@ -84,12 +85,21 @@ int sum_n(const int *array, int size, int target) {
  */
 int reduce(int *array, int size) {
     int zero_count = 0;
-    for (int i = 0; i < size - zero_count+1; ++i) {
+    for (int i = 0; i < size - zero_count; ++i) {
         if (array[i] == 0) {
-            for (int j = i + 1; j < size - zero_count; ++j) {
-                array[j - 1] = array[j];
+            int index = i;
+            int current_zero_count = 0;
+            while (1) { //Find all sequential zeros
+                if (index >= size - zero_count || array[index] != 0) {
+                    break;
+                }
+                index++;
+                current_zero_count++;
             }
-            zero_count++;
+            zero_count += current_zero_count;
+            for (int j = i; j < size - zero_count; ++j) {
+                array[j] = array[j + current_zero_count];
+            }
         }
     }
     return size - zero_count;
@@ -155,6 +165,13 @@ int main() {
 
     validate_reduce_method(arr2, size);
 
+    int arr3[] = {0, 0, 0, 0, 0, 0};
+
+    validate_reduce_method(arr3, size);
+    int arr4[] = {0, 0, 0, 0, 0, 4};
+
+    validate_reduce_method(arr4, size);
+
     char *email1 = "nimrodma99@gmail.com";
     assert(is_legal_email(email1));
 
@@ -171,7 +188,7 @@ int main() {
 void validate_reduce_method(int *arr, int size) {
     int zero_count = 0;
     for (int i = 0; i < size; ++i) {
-        if(arr[i] == 0) {
+        if (arr[i] == 0) {
             zero_count++;
         }
     }
