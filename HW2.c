@@ -152,38 +152,38 @@ bool is_same_email(const char *email1, const char *email2) {
     return true;
 }
 
-int main() {
-    int arr[] = {1, 0, 5, 8, 0, 0};
-    int size = 6;
-    assert(same_value(arr, size) == 4);
-
-    assert(sum_n(arr, size, 8) == 1);
-
-    validate_reduce_method(arr, size);
-
-    int arr2[] = {0, 1, 5, 8, 5, 0};
-
-    validate_reduce_method(arr2, size);
-
-    int arr3[] = {0, 0, 0, 0, 0, 0};
-
-    validate_reduce_method(arr3, size);
-    int arr4[] = {0, 0, 0, 0, 0, 4};
-
-    validate_reduce_method(arr4, size);
-
-    char *email1 = "nimrodma99@gmail.com";
-    assert(is_legal_email(email1));
-
-    char *email2 = "nimrodma99@gma.il.co";
-    assert(is_legal_email(email2));
-
-    char *email3 = "nIMRODMa99@gmail.coM";
-    assert(is_same_email(email1, email3));
-
-    printf("PASS");
-    return 0;
-}
+//int main() {
+//    int arr[] = {1, 0, 5, 8, 0, 0};
+//    int size = 6;
+//    assert(same_value(arr, size) == 4);
+//
+//    assert(sum_n(arr, size, 8) == 1);
+//
+//    validate_reduce_method(arr, size);
+//
+//    int arr2[] = {0, 1, 5, 8, 5, 0};
+//
+//    validate_reduce_method(arr2, size);
+//
+//    int arr3[] = {0, 0, 0, 0, 0, 0};
+//
+//    validate_reduce_method(arr3, size);
+//    int arr4[] = {0, 0, 0, 0, 0, 4};
+//
+//    validate_reduce_method(arr4, size);
+//
+//    char *email1 = "nimrodma99@gmail.com";
+//    assert(is_legal_email(email1));
+//
+//    char *email2 = "nimrodma99@gma.il.co";
+//    assert(is_legal_email(email2));
+//
+//    char *email3 = "nIMRODMa99@gmail.coM";
+//    assert(is_same_email(email1, email3));
+//
+//    printf("PASS");
+//    return 0;
+//}
 
 void validate_reduce_method(int *arr, int size) {
     int zero_count = 0;
