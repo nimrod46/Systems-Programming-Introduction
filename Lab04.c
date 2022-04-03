@@ -32,14 +32,14 @@ void rcopy(char* destination, const char* source) {
     }
 }
 
-int main() {
-    bool b = gematriacmp("Abcb", "abcaa");
-    printf("%s\n", b ? "true": "false");
-
-    char arr[7];
-    rcopy(arr, "1234456");
-    for (int i = 0; i < 7; ++i) {
-        printf("%c\n", arr[i]);
-    }
-    return 0;
-}
+//int main() {
+//    bool b = gematriacmp("Abcb", "abcaa");
+//    printf("%s\n", b ? "true": "false");
+//
+//    char arr[7];
+//    rcopy(arr, "1234456");
+//    for (int i = 0; i < 7; ++i) {
+//        printf("%c\n", arr[i]);
+//    }
+//    return 0;
+//}
