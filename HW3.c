@@ -53,22 +53,21 @@ char *get_chapter_file_name(const char s[], const char prefix[], const char suff
     unsigned int prefix_size = my_strlen(prefix);
     unsigned int suffix_size = my_strlen(suffix);
 
-    char *title = malloc(sizeof(int) * (s_size + prefix_size + suffix_size + 1));
+    char *title = malloc(sizeof(char) * (s_size + prefix_size + suffix_size + 1));
 
     for (int i = 0; i < prefix_size + 1; ++i) {
         title[i] = prefix[i];
     }
-    for (unsigned int i = prefix_size; i < s_size + prefix_size + suffix_size + 1; ++i) {
+    for (int i = prefix_size; i < s_size + prefix_size + suffix_size + 1; ++i) {
         title[i] = '\0';
     }
     bool trimming_mode = true;
-    for (unsigned int i = s_size - 1; i >= 0; --i) {
+    for (int i = s_size - 1; i >= 0; --i) {
         char c = s[i];
         if (!isspace(c)) {
             trimming_mode = false;
             title[i + prefix_size] = s[i];
-        }
-        else if(!trimming_mode) {
+        } else if (!trimming_mode) {
             title[i + prefix_size] = '-';
         }
     }
@@ -78,15 +77,53 @@ char *get_chapter_file_name(const char s[], const char prefix[], const char suff
 }
 
 int main() {
-    printf("%d\n", my_strlen("123456789"));
-    char c[10] = "12";
-    my_strcat(c, "");
-    printf("%s\n", c);
-    printf("%s\n", starts_with("1234", "13") ? "true" : "false");
-    printf("%d\n", num_words("12 344 51"));
+//    printf("%d\n", my_strlen("123456789"));
+//    char c[10] = "12";
+//    my_strcat(c, "");
+//    printf("%s\n", c);
+//    printf("%s\n", starts_with("1234", "13") ? "true" : "false");
+//    printf("%d\n", num_words("12 344 51"));
+//
+//
+//    printf("%s\n", get_chapter_file_name("1 234    ", "ty", "k"));
+    setbuf(stdout, NULL);
+    char c;
+    char name[100] = {0};
+
+    printf("Type book name: ");
+    scanf("%99s", name);
+
+    char output_prefix[100] = {0};
+    printf("Type output prefix: ");
+    scanf("%99s", output_prefix);
+
+    char output_suffix[100] = {'.', 't', 'x', 't'};
+    printf("Type output suffix: ");
+    scanf("%99s", output_suffix);
 
 
-    printf("%s\n", get_chapter_file_name("1 234    ", "ty", "k"));
+    char *file_name = get_chapter_file_name("PREFIX", output_prefix, output_suffix);
+    printf("%s\n", file_name);
+    FILE *f_in = fopen(name, "r"), *f_out = fopen(file_name, "w");
+    char *buf = NULL;
+    size_t buf_size = 0;
+
+    if(!f_in || !f_out) {
+        printf("Failed...");
+        return -1;
+    }
+
+    while(getline(&buf, &buf_size, f_in) != EOF) {
+        if(starts_with(buf, "CHAPTER")) {
+            file_name = get_chapter_file_name(buf, output_prefix, output_suffix);
+            f_out = fopen(file_name, "w");
+            continue;
+        }
+        fprintf(f_out, "%s", buf);
+    }
+    fclose(f_in);
+    fclose(f_out);
+    free(buf);
 
 }
 
