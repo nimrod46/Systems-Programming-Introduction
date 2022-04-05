@@ -32,26 +32,26 @@ void remove_char(char *str, char char_to_remove) {
     }
 }
 
-int main() {
-    setbuf(stdout, NULL);
-
-    int n;
-    printf("Type n: ");
-    scanf("%d", &n);
-    int *arr = malloc(sizeof(int) * n);
-    for (int i = 0; i < n; ++i) {
-        printf("Type next number: ");
-        scanf("%d", arr + i);
-    }
-    find_divided(arr, n, 5);
-
-    char str[] = "abcrgcr";
-    remove_char(str, 'r');
-
-    printf("%s",str);
-
-
-
-
-}
+//int main() {
+//    setbuf(stdout, NULL);
+//
+//    int n;
+//    printf("Type n: ");
+//    scanf("%d", &n);
+//    int *arr = malloc(sizeof(int) * n);
+//    for (int i = 0; i < n; ++i) {
+//        printf("Type next number: ");
+//        scanf("%d", arr + i);
+//    }
+//    find_divided(arr, n, 5);
+//
+//    char str[] = "abcrgcr";
+//    remove_char(str, 'r');
+//
+//    printf("%s",str);
+//
+//
+//
+//
+//}
 
