@@ -52,16 +52,17 @@ char *get_chapter_file_name(const char s[], const char prefix[], const char suff
     unsigned int s_size = my_strlen(s);
     unsigned int prefix_size = my_strlen(prefix);
     unsigned int suffix_size = my_strlen(suffix);
+
     char *title = malloc(sizeof(int) * (s_size + prefix_size + suffix_size + 1));
-    //title[s_size + prefix_size + suffix_size] = '\0';
+
     for (int i = 0; i < prefix_size + 1; ++i) {
         title[i] = prefix[i];
     }
-    for (int i = prefix_size; i < s_size + prefix_size + suffix_size + 1; ++i) {
+    for (unsigned int i = prefix_size; i < s_size + prefix_size + suffix_size + 1; ++i) {
         title[i] = '\0';
     }
     bool trimming_mode = true;
-    for (int i = s_size - 1; i >= 0; --i) {
+    for (unsigned int i = s_size - 1; i >= 0; --i) {
         char c = s[i];
         if (!isspace(c)) {
             trimming_mode = false;
