@@ -5,6 +5,7 @@
 #include <stdbool.h>
 #include <ctype.h>
 #include <malloc.h>
+#include <stdlib.h>
 
 void print_file_info(const char *name, unsigned int lines_count, unsigned int words_count,
                      unsigned int char_count);
@@ -14,7 +15,6 @@ unsigned int my_strlen(const char str[]) {
     while (str[size] != '\0') {
         size++;
     }
-
     return size;
 }
 
@@ -54,13 +54,14 @@ char *get_chapter_file_name(const char s[], const char prefix[], const char suff
     unsigned int prefix_size = my_strlen(prefix);
     unsigned int suffix_size = my_strlen(suffix);
 
-    char *title = malloc(sizeof(char) * (s_size + prefix_size + suffix_size + 1));
-
+    unsigned total_size = s_size + prefix_size + suffix_size + 1;
+    char *title = calloc((total_size) , sizeof(char));
+    if (!title) {
+        printf("Failed to allocate %lu bytes", sizeof(char) *  total_size);
+        exit(1);
+    }
     for (int i = 0; i < prefix_size + 1; ++i) {
         title[i] = prefix[i];
-    }
-    for (int i = prefix_size; i < s_size + prefix_size + suffix_size + 1; ++i) {
-        title[i] = '\0';
     }
     bool trimming_mode = true;
     for (int i = s_size - 1; i >= 0; --i) {
@@ -78,37 +79,22 @@ char *get_chapter_file_name(const char s[], const char prefix[], const char suff
 }
 
 int main(int argc, char *argv[]) {
-//    printf("%d\n", my_strlen("123456789"));
-//    char c[10] = "12";
-//    my_strcat(c, "");
-//    printf("%s\n", c);
-//    printf("%s\n", starts_with("1234", "13") ? "true" : "false");
-//    printf("%d\n", num_words("12 344 51"));
-//
-//
-//    printf("%s\n", get_chapter_file_name("1 234    ", "ty", "k"));
     setbuf(stdout, NULL);
-    char c;
     char *name = argv[1];
-    printf("name: %s\n", name);
-
     char *output_prefix = argv[2];
-    printf("output prefix: %s\n", output_prefix);
     char *output_suffix = ".txt";
     if (argc > 3) {
         output_suffix = argv[3];
     }
-    printf("output suffix: %s\n", output_suffix);
 
     char *file_name = get_chapter_file_name("PREFACE", output_prefix, output_suffix);
-    printf("%s\n", file_name);
     FILE *f_in = fopen(name, "r"), *f_out = fopen(file_name, "w");
     char *buf = NULL;
     size_t buf_size = 0;
 
     if (!f_in || !f_out) {
-        printf("Failed...");
-        return -1;
+        printf("Failed to open files: %s or %s", name, file_name);
+        return 2;
     }
 
     unsigned int current_lines_count = 0;
@@ -128,8 +114,14 @@ int main(int argc, char *argv[]) {
             current_lines_count = 1;
             current_words_count = num_words(buf);
             current_char_count = my_strlen(buf);
+            free(file_name);
             file_name = get_chapter_file_name(buf, output_prefix, output_suffix);
+            fclose(f_out);
             f_out = fopen(file_name, "w");
+            if (!f_out) {
+                printf("Failed to create file: %s", file_name);
+                return 3;
+            }
             continue;
         }
         current_lines_count++;
@@ -138,6 +130,7 @@ int main(int argc, char *argv[]) {
         fprintf(f_out, "%s", buf);
     }
     print_file_info(file_name, current_lines_count, current_words_count, current_char_count);
+    free(file_name);
 
     total_lines_count += current_lines_count;
     total_words_count += current_words_count;
@@ -147,8 +140,6 @@ int main(int argc, char *argv[]) {
     free(buf);
 
     print_file_info("Total", total_lines_count, total_words_count, total_char_count);
-
-    printf("\n");
 }
 
 void print_file_info(const char *name, unsigned int lines_count, unsigned int words_count, unsigned int char_count) {
