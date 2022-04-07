@@ -57,7 +57,7 @@ char *get_chapter_file_name(const char s[], const char prefix[], const char suff
     unsigned total_size = s_size + prefix_size + suffix_size + 1;
     char *title = calloc(total_size , sizeof(char));
     if (!title) {
-        printf("Failed to allocate %lu bytes", sizeof(char) *  total_size);
+        fprintf(stderr, "Failed to allocate %lu bytes", sizeof(char) *  total_size);
         exit(1);
     }
     for (int i = 0; i < prefix_size; ++i) {
@@ -98,7 +98,7 @@ int main(int argc, char *argv[]) {
     size_t buf_size = 0;
 
     if (!f_in || !f_out) {
-        printf("Failed to open files: %s , %s", name, file_name);
+        fprintf(stderr, "Failed to open files: %s , %s\n", name, file_name);
         return 2;
     }
 
@@ -116,18 +116,17 @@ int main(int argc, char *argv[]) {
             total_lines_count += current_lines_count;
             total_words_count += current_words_count;
             total_char_count += current_char_count;
-            current_lines_count = 1;
-            current_words_count = num_words(buf);
-            current_char_count = my_strlen(buf);
+            current_lines_count = 0;
+            current_words_count = 0;
+            current_char_count = 0;
             free(file_name);
             file_name = get_chapter_file_name(buf, output_prefix, output_suffix);
             fclose(f_out);
             f_out = fopen(file_name, "w");
             if (!f_out) {
-                printf("Failed to create file: %s", file_name);
+                fprintf(stderr, "Failed to create file: %s", file_name);
                 return 3;
             }
-            continue;
         }
         current_lines_count++;
         current_words_count += num_words(buf);
