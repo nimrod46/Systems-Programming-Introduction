@@ -55,12 +55,12 @@ char *get_chapter_file_name(const char s[], const char prefix[], const char suff
     unsigned int suffix_size = my_strlen(suffix);
 
     unsigned total_size = s_size + prefix_size + suffix_size + 1;
-    char *title = calloc((total_size) , sizeof(char));
+    char *title = calloc(total_size , sizeof(char));
     if (!title) {
         printf("Failed to allocate %lu bytes", sizeof(char) *  total_size);
         exit(1);
     }
-    for (int i = 0; i < prefix_size + 1; ++i) {
+    for (int i = 0; i < prefix_size; ++i) {
         title[i] = prefix[i];
     }
     bool trimming_mode = true;
@@ -80,6 +80,11 @@ char *get_chapter_file_name(const char s[], const char prefix[], const char suff
 
 int main(int argc, char *argv[]) {
     setbuf(stdout, NULL);
+    if(argc <=2) {
+        fprintf(stderr, "\nUsage: %s <file-path> <output-prefix> [output-suffix] \n", argv[0]);
+        return 1;
+    }
+    setbuf(stdout, NULL);
     char *name = argv[1];
     char *output_prefix = argv[2];
     char *output_suffix = ".txt";
@@ -93,7 +98,7 @@ int main(int argc, char *argv[]) {
     size_t buf_size = 0;
 
     if (!f_in || !f_out) {
-        printf("Failed to open files: %s or %s", name, file_name);
+        printf("Failed to open files: %s , %s", name, file_name);
         return 2;
     }
 
