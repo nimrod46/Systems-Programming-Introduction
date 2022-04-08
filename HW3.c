@@ -1,6 +1,6 @@
 //
-// Created by nimrod on 05-Apr-22.
-//
+// Created by nimrod machlav
+// Id: 315230185
 #include <stdio.h>
 #include <stdbool.h>
 #include <ctype.h>
@@ -17,10 +17,10 @@
 void print_chapter_info(const char *name, unsigned int lines_count, unsigned int words_count,
                         unsigned int char_count);
 /**
- * Generates chapters by searching for "CHAPTER" in each line
+ * Generates chapters files by searching for "CHAPTER" in each line, also prints basic stats for each chapter
  * @param src_file_name : src file name
  * @param output_prefix : prefix for each generated chapter file
- * @param output_suffix : suffix for each generated chapter file
+ * @param output_suffix : suffix for each chapter name
  */
 void generate_chapters(const char *src_file_name, const char *output_prefix, const char *output_suffix);
 
@@ -73,19 +73,31 @@ bool starts_with(const char s[], const char prefix[]) {
     return true;
 }
 
-unsigned int num_words(const char words[]) {
-    unsigned int words_size = my_strlen(words);
+/**
+ * Works by basically counting the number of switches between a space and a regular char
+ * @param str : string to count
+ * @return number of words in the given "str" string
+ */
+unsigned int num_words(const char str[]) {
+    unsigned int words_size = my_strlen(str);
     unsigned int words_count = 0;
     char last_char = ' ';
     for (int i = 0; i < words_size; ++i) {
-        if (isspace(last_char) && !isspace(words[i])) {
+        if (isspace(last_char) && !isspace(str[i])) {
             words_count++;
         }
-        last_char = words[i];
+        last_char = str[i];
     }
     return words_count;
 }
-
+/**
+ *
+ * @param s : chapter name string
+ * @param prefix : chapter prefix string
+ * @param suffix : chapter suffix string
+ * @return Chapter name after normalizing "s" (see "trim_and_replace_spaces"), and concatenating as: prefix + s + suffix
+ *
+ */
 char *get_chapter_file_name(const char s[], const char prefix[], const char suffix[]) {
     unsigned int s_size = my_strlen(s);
     unsigned int prefix_size = my_strlen(prefix);
@@ -113,7 +125,6 @@ int main(int argc, char *argv[]) {
         fprintf(stderr, "\nUsage: %s <file-path> <output-prefix> [output-suffix] \n", argv[0]);
         return 1;
     }
-    setbuf(stdout, NULL);
     char *src_file_name = argv[1];
     char *output_prefix = argv[2];
     char *output_suffix = ".txt";
@@ -147,7 +158,7 @@ void generate_chapters(const char *src_file_name, const char *output_prefix, con
     unsigned int total_char_count = 0;
 
     while (getline(&buf, &buf_size, f_in) != EOF) {
-        if (starts_with(buf, "CHAPTER")) {
+        if (starts_with(buf, "CHAPTER")) { //new chapter? let's switch to next chapter and file output accordingly
             print_chapter_info(dest_file_name, current_lines_count, current_words_count, current_char_count);
             total_lines_count += current_lines_count;
             total_words_count += current_words_count;
