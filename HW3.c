@@ -159,6 +159,7 @@ void generate_chapters(const char *src_file_name, const char *output_prefix, con
 
     while (getline(&buf, &buf_size, f_in) != EOF) {
         if (starts_with(buf, "CHAPTER")) { //new chapter? let's switch to next chapter and file output accordingly
+            //But first we need to print chapter info and reset current counters
             print_chapter_info(dest_file_name, current_lines_count, current_words_count, current_char_count);
             total_lines_count += current_lines_count;
             total_words_count += current_words_count;
