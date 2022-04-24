@@ -119,22 +119,22 @@ char *get_chapter_file_name(const char s[], const char prefix[], const char suff
     return title;
 }
 
-int main(int argc, char *argv[]) {
-    setbuf(stdout, NULL);
-    if (argc <= 2) {
-        fprintf(stderr, "\nUsage: %s <file-path> <output-prefix> [output-suffix] \n", argv[0]);
-        return 1;
-    }
-    char *src_file_name = argv[1];
-    char *output_prefix = argv[2];
-    char *output_suffix = ".txt";
-    if (argc > 3) {
-        output_suffix = argv[3];
-    }
-
-    generate_chapters(src_file_name, output_prefix, output_suffix);
-    return 0;
-}
+//int main(int argc, char *argv[]) {
+//    setbuf(stdout, NULL);
+//    if (argc <= 2) {
+//        fprintf(stderr, "\nUsage: %s <file-path> <output-prefix> [output-suffix] \n", argv[0]);
+//        return 1;
+//    }
+//    char *src_file_name = argv[1];
+//    char *output_prefix = argv[2];
+//    char *output_suffix = ".txt";
+//    if (argc > 3) {
+//        output_suffix = argv[3];
+//    }
+//
+//    generate_chapters(src_file_name, output_prefix, output_suffix);
+//    return 0;
+//}
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "DanglingPointer"
 
