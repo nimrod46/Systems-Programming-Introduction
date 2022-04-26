@@ -17,8 +17,8 @@ char* read(const char *path) {
     return new_str;
 }
 
-int main() {
-    printf("%s", read("beatles-summary.txt"));
-    return 0;
-}
+//int main() {
+//    printf("%s", read("beatles-summary.txt"));
+//    return 0;
+//}
 
