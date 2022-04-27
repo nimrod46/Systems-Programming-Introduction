@@ -6,7 +6,7 @@
 typedef void *Element;
 typedef struct Hist *Hist;
 
-// An ADT for the Hist object. Such object maintains and unordered set of elements, along with a count for each one.
+// An ADT for the Hist object. Such object maintains and unordered set of elements, along with a size for each one.
 
 // Create a new histogram object, with element manipulation functions:
 // clone_func - return a pointer to the cloned element.
@@ -23,11 +23,11 @@ void HistDestroy(Hist hist);
 // Return the number of elements in the hist object
 unsigned int HistSize(Hist hist);
 
-// Get the count of element e. If e is not in hist, returns 0.
+// Get the size of element e. If e is not in hist, returns 0.
 int HistGetCount(Hist hist, Element e);
 
-// Increment the count of e by one.
-// If e is not in hist, create a new entry with a clone of e and a count of 1.
+// Increment the size of e by one.
+// If e is not in hist, create a new entry with a clone of e and a size of 1.
 void HistInc(Hist hist, Element e);
 
 // Gets (a clone of) the element at given index.

@@ -63,7 +63,7 @@ int same_value(const int *array, int size) {
  * @param array int array
  * @param size array size
  * @param target sum target to find
- * @return The count
+ * @return The size
  */
 int sum_n(const int *array, int size, int target) {
     int count = 0;

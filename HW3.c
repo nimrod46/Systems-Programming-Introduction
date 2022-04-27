@@ -10,9 +10,9 @@
 /**
  * Prints chapter information as instructed in the assignment
  * @param name : Chapter name
- * @param lines_count : Chapter lines count
- * @param words_count : Chapter words count
- * @param char_count : Chapter char count
+ * @param lines_count : Chapter lines size
+ * @param words_count : Chapter words size
+ * @param char_count : Chapter char size
  */
 void print_chapter_info(const char *name, unsigned int lines_count, unsigned int words_count,
                         unsigned int char_count);
@@ -75,7 +75,7 @@ bool starts_with(const char s[], const char prefix[]) {
 
 /**
  * Works by basically counting the number of switches between a space and a regular char
- * @param str : string to count
+ * @param str : string to size
  * @return number of words in the given "str" string
  */
 unsigned int num_words(const char str[]) {
