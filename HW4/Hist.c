@@ -77,9 +77,9 @@ unsigned int HistSize(Hist hist) {
 // Get the size of element e. If e is not in hist, returns 0.
 int HistGetCount(Hist hist, Element e) {
     Node node = getElement(hist, e);
-   if(node) {
-       return node->count;
-   }
+    if (node) {
+        return node->count;
+    }
     return 0;
 }
 
@@ -89,9 +89,9 @@ bool contains(Hist hist, Element e) {
 
 // Increment the size of e by one.
 // If e is not in hist, create a new entry with a clone of e and a size of 1.
-void HistInc(Hist hist, Element e){
+void HistInc(Hist hist, Element e) {
     Node node = getElement(hist, e);
-    if(node) {
+    if (node) {
         node->count++;
         return;
     }
@@ -106,7 +106,7 @@ void HistInc(Hist hist, Element e){
 // Gets (a clone of) the element at given index.
 // If index<0 or index >= HistSize(hist) then NULL is returned.
 Element HistGetElement(Hist hist, unsigned int index) {
-    if(index<0 || index >= HistSize(hist)) {
+    if (index < 0 || index >= HistSize(hist)) {
         return NULL;
     }
 

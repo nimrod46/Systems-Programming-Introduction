@@ -1,18 +1,12 @@
 //
 // Created by nimrod on 27-Apr-22.
 //
-//תקבל דרך שורת הפקודה עד שני פרמטרים : נתיב )path )של קובץ קלט ונתיב של קובץ הפלט. אם
-//        חסר קובץ הפלט, או שקובץ הפלט הינו התו מינוס " -", אז הפלט יכתב ל -stdout .אם חסר קובץ
-//        הקלט, או שקובץ הקלט הינו התו מינוס "-", אז הקלט יכתב ל -stdin .אם מספר הארגומנטים גדול
-//מדי, או פתיחת הקבצי הקלט/פלט נכשלה, הוציאו הודעת שגיאה ל -stderr וסיימו את התוכנית.
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "Hist.h"
 
-FILE *getSysStreamOrDefByArg(int argc, char *argv[], const char *type, FILE *system_def);
-
+FILE *getFileStreamOrDefByArg(int argc, char *argv[], bool is_read);
 
 static Element clone_str(Element str_elem) {
     if (!str_elem) return NULL;
@@ -27,8 +21,8 @@ static bool cmp_str(Element int_elem_1, Element int_elem_2) {
 
 int main(int argc, char *argv[]) {
     setbuf(stdout, NULL);
-    FILE *input = getSysStreamOrDefByArg(argc, argv, "r", stdin);
-    FILE *output = getSysStreamOrDefByArg(--argc, ++argv, "w", stdout);
+    FILE *input = getFileStreamOrDefByArg(argc, argv, true);
+    FILE *output = getFileStreamOrDefByArg(--argc, ++argv, false);
 
     printf("Started: %d\n", stdin == input);
     Hist hist = HistCreate(clone_str, free, cmp_str);
@@ -36,7 +30,7 @@ int main(int argc, char *argv[]) {
     size_t buf_size;
     while (getline(&buf, &buf_size, input) != EOF) {
         size_t last_idx = strlen(buf) - 1;
-        if( buf[last_idx] == '\n' ) {
+        if (buf[last_idx] == '\n') {
             buf[last_idx] = '\0';
         }
         HistInc(hist, buf);
@@ -51,11 +45,11 @@ int main(int argc, char *argv[]) {
     fclose(output);
 }
 
-FILE *getSysStreamOrDefByArg(int argc, char *argv[], const char *type, FILE *system_def) {
+FILE *getFileStreamOrDefByArg(int argc, char *argv[], bool is_read) {
     if (argc <= 1 || *argv[1] == '-') {
-        return system_def;
+        return is_read ? stdin : stdout;
     }
-    FILE *input = fopen(argv[1], type);
+    FILE *input = fopen(argv[1], is_read ? "r" : "w");
     if (!input) {
         fprintf(stderr, "Unable to open '%s'\n",
                 argv[1]);
