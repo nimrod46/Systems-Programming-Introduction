@@ -22,12 +22,7 @@ static Element clone_str(Element str_elem) {
 };
 
 static bool cmp_str(Element int_elem_1, Element int_elem_2) {
-    char *c1 = (char *) int_elem_1;
-    const char *c2 = (char *) int_elem_2;
-    unsigned int len1 = strlen(c1);
-    bool b = strcmp(int_elem_1, int_elem_2) == 0;
-
-    return b;
+    return strcmp(int_elem_1, int_elem_2) == 0;
 }
 
 int main(int argc, char *argv[]) {
@@ -46,6 +41,8 @@ int main(int argc, char *argv[]) {
         }
         HistInc(hist, buf);
     }
+    free(buf);
+    fclose(input);
 
     for (int i = 0; i < HistSize(hist); ++i) {
         char *str = HistGetElement(hist, i);

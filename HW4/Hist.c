@@ -28,7 +28,7 @@ struct Hist {
 static Element clone_node_func(Node node_elem) {
     if (!node_elem) return NULL;
     Node new_node = malloc(sizeof(struct Node));
-    char *p = malloc(strlen(node_elem->e) + 1);
+    char *p = malloc(strlen(node_elem->e) + 1); //TODO: use clone_func somehow
     strcpy(p, node_elem->e);
     new_node->e = p;
     new_node->count = node_elem->count;
@@ -46,7 +46,7 @@ Hist HistCreate(Element (*clone_func)(Element),
     }
     //hist->linkedList = LLCreate(clone_func, free_func);
     hist->size = 0;
-    hist->set = SetCreate(clone_node_func, free_func, cmp_func);
+    hist->set = SetCreate((Element (*)(Element)) clone_node_func, free_func, cmp_func);
     hist->clone_func = clone_func;
     hist->free_func = free_func;
     hist->cmp_func = cmp_func;
@@ -65,7 +65,7 @@ Node getElement(Hist hist, Element e) {
 }
 
 // Destroy a histogram object (along with all its elements)
-void HistDestroy(Hist hist) {
+void HistDestroy(Hist hist) { //TODO: Impl
 
 }
 
@@ -95,7 +95,7 @@ void HistInc(Hist hist, Element e){
         node->count++;
         return;
     }
-    Node new_node = malloc(sizeof(struct Node));
+    Node new_node = malloc(sizeof(struct Node));//TODO: handle error
     new_node->e = hist->clone_func(e);
     new_node->count = 1;
     SetAdd(hist->set, new_node);
@@ -120,9 +120,5 @@ Element HistGetElement(Hist hist, unsigned int index) {
         n++;
     }
     return NULL;
-
-
-
-
 }
 
