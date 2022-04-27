@@ -106,9 +106,9 @@ void HistInc(Hist hist, Element e){
 // Gets (a clone of) the element at given index.
 // If index<0 or index >= HistSize(hist) then NULL is returned.
 Element HistGetElement(Hist hist, unsigned int index) {
-//    if(index<0 || index >= HistSize(hist)) {
-//        return NULL;
-//    }
+    if(index<0 || index >= HistSize(hist)) {
+        return NULL;
+    }
 
     Node nextNode = SetFirst(hist->set);
     int n = 0;

@@ -41,7 +41,6 @@ int main(int argc, char *argv[]) {
     size_t buf_size;
     while (getline(&buf, &buf_size, input) != EOF) {
         size_t last_idx = strlen(buf) - 1;
-
         if( buf[last_idx] == '\n' ) {
             buf[last_idx] = '\0';
         }
@@ -50,7 +49,7 @@ int main(int argc, char *argv[]) {
 
     for (int i = 0; i < HistSize(hist); ++i) {
         char *str = HistGetElement(hist, i);
-        fprintf(output, "%s%3d\n", str, HistGetCount(hist, str));
+        fprintf(output, "%3d %s\n", HistGetCount(hist, str), str);
     }
     fclose(output);
 }
