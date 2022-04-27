@@ -24,7 +24,6 @@ int main(int argc, char *argv[]) {
     FILE *input = getFileStreamOrDefByArg(argc, argv, true);
     FILE *output = getFileStreamOrDefByArg(--argc, ++argv, false);
 
-    printf("Started: %d\n", stdin == input);
     Hist hist = HistCreate(clone_str, free, cmp_str);
     char *buf = NULL;
     size_t buf_size;
@@ -43,6 +42,7 @@ int main(int argc, char *argv[]) {
         fprintf(output, "%3d %s\n", HistGetCount(hist, str), str);
     }
     fclose(output);
+    HistDestroy(hist);
 }
 
 FILE *getFileStreamOrDefByArg(int argc, char *argv[], bool is_read) {
