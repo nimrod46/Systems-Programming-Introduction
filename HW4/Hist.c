@@ -21,7 +21,8 @@ struct Hist {
 
     bool (*cmp_func)(Element, Element);
 
-    unsigned int size;
+    size_t size;
+
     Set set;
 };
 
@@ -46,7 +47,7 @@ Hist HistCreate(Element (*clone_func)(Element),
     }
     //hist->linkedList = LLCreate(clone_func, free_func);
     hist->size = 0;
-    hist->set = SetCreate((Element (*)(Element)) clone_node_func, free_func, cmp_func);
+    hist->set = SetCreate((Element (*)(Element)) clone_node_func, free, cmp_func);
     hist->clone_func = clone_func;
     hist->free_func = free_func;
     hist->cmp_func = cmp_func;
@@ -66,7 +67,7 @@ Node getElement(Hist hist, Element e) {
 
 // Destroy a histogram object (along with all its elements)
 void HistDestroy(Hist hist) { //TODO: Impl
-
+    SetDestroy(hist->set);
 }
 
 // Return the number of elements in the hist object
