@@ -38,7 +38,7 @@ int main(int argc, char *argv[]) {
     fclose(input);
 
     for (int i = 0; i < HistSize(hist); ++i) {
-        char *str = HistGetElement(hist, i);
+        char *str = HistGetElement(hist, i);//TODO: FIX!
         fprintf(output, "%3d %s\n", HistGetCount(hist, str), str);
     }
     fclose(output);

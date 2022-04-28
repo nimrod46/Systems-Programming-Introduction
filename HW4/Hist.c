@@ -28,8 +28,8 @@ struct Hist {
 
 static Element clone_node_func(Node node_elem) {
     if (!node_elem) return NULL;
-    Node new_node = malloc(sizeof(struct Node));
-    char *p = malloc(strlen(node_elem->e) + 1); //TODO: use clone_func somehow
+    Node new_node = calloc(sizeof(struct Node), 1);
+    char *p = calloc(strlen(node_elem->e) + 1, 1); //TODO: use clone_func somehow
     strcpy(p, node_elem->e);
     new_node->e = p;
     new_node->count = node_elem->count;
@@ -96,7 +96,12 @@ void HistInc(Hist hist, Element e) {
         node->count++;
         return;
     }
-    Node new_node = malloc(sizeof(struct Node));//TODO: handle error
+    Node new_node = calloc(sizeof(struct Node), 1);
+    if (!new_node) {
+        fprintf(stderr, "%s/%u: failed to allocate %lu bytes\n\n",
+                __FILE__, __LINE__, sizeof(struct Hist));
+        exit(-1);
+    }
     new_node->e = hist->clone_func(e);
     new_node->count = 1;
     SetAdd(hist->set, new_node);
@@ -122,4 +127,3 @@ Element HistGetElement(Hist hist, unsigned int index) {
     }
     return NULL;
 }
-
