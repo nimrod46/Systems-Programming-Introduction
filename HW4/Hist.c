@@ -47,10 +47,12 @@ static Element clone_node_func(Element elem_to_clone) {
 };
 
 static bool cmp_node_func(Element elem1, Element elem2) {
+    if(!elem1 || !elem2) return !elem1 && !elem2;
     return element_cmp_func(((Node) elem1)->e, ((Node) elem2)->e);
 }
 
 static void free_node_func(Element elem) {
+    if(!elem) return;
     element_free_func(((Node) elem)->e);
     free(elem);
 }
@@ -64,7 +66,6 @@ Hist HistCreate(Element (*clone_func)(Element),
                 __FILE__, __LINE__, sizeof(struct Hist));
         exit(-1);
     }
-    //hist->linkedList = LLCreate(clone_func, free_func);
     hist->size = 0;
     hist->clone_func = clone_func;
     hist->free_func = free_func;

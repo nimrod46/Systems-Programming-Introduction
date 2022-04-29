@@ -19,8 +19,8 @@ static int hist_size(Hist hist) {
     int c = 0;
     Element e = HistGetElement(hist, 0);
     while (e) {
-        e = HistGetElement(hist, c);
         c++;
+        e = HistGetElement(hist, c);
     }
     return c;
 }
@@ -37,7 +37,7 @@ static void test_int_set1() {
     HistInc(hist, &i7);
     HistInc(hist, &i7);
     assert(HistSize(hist) == 2);
-    assert(HistGetCount(hist, &i0) == 2);
+    assert(HistGetCount(hist, &i7) == 2);
 
     int *first = (int *) HistGetElement(hist, 0);
     int *second = (int *) HistGetElement(hist, 1);
@@ -61,8 +61,8 @@ static void test_int_set2(int n) {
     assert(HistGetCount(hist, &k) == n);
     for (int i = 0; i < n; ++i) {
         HistInc(hist, &i);
-        assert(HistSize(hist) == i + 1);
-        assert(hist_size(hist) == i + 1);
+        assert(HistSize(hist) == i + 2);
+        assert(hist_size(hist) == i + 2);
         assert(HistGetCount(hist, &i) == 1);
     }
 }
@@ -78,29 +78,28 @@ static bool cmp_str(Element str_elem_1, Element str_elem_2) {
 }
 
 static void test_str_set() {
-//    Hist hist = HistCreate(clone_str, free, cmp_str);
-//    assert(set_size(hist) == 0);
-//    assert(SetIsEmpty(hist));
-//    SetAdd(hist, "");
-//    SetAdd(hist, "abc");
-//    SetAdd(hist, "def");
-//    assert(set_size(hist) == 3);
-//    assert(!SetIsEmpty(hist));
-//    assert(SetIsIn(hist, "abc"));
-//    assert(SetIsIn(hist, ""));
-//    assert(!SetIsIn(hist, "ABC"));
-//    SetRemove(hist, "abc");
-//    SetRemove(hist, "abc");
-//    assert(set_size(hist) == 2);
-//    assert(!SetIsIn(hist, "abc"));
-//    assert(SetIsIn(hist, ""));
-//    assert(!SetIsIn(hist, "ABC"));
-//    assert(!SetIsEmpty(hist));
-//    HistDestroy(hist)
+    Hist hist = HistCreate(clone_str, free, cmp_str);
+    assert(HistSize(hist) == 0);
+    HistInc(hist, "");
+    HistInc(hist, "abc");
+    HistInc(hist, "def");
+    assert(HistSize(hist) == 3);
+    assert(HistGetCount(hist, "abc") == 1);
+    assert(HistGetCount(hist, "") == 1);
+    assert(HistGetCount(hist, "ABC") == 0);
+
+    assert(HistGetElement(hist, 0));
+    assert(HistGetElement(hist, 1));
+    assert(HistGetElement(hist, 2));
+    assert(!HistGetElement(hist, 3));
+
+    HistDestroy(hist);
+
 }
 
-void test_set() {
+void test_hist() {
     test_int_set1();
+    test_int_set2(10);
     test_int_set2(1100);
     test_str_set();
 }
