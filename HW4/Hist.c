@@ -26,15 +26,34 @@ struct Hist {
     Set set;
 };
 
-static Element clone_node_func(Node node_elem) {
-    if (!node_elem) return NULL;
+static Element (*element_clone_func)(Element);
+
+static void (*element_free_func)(Element);
+
+static bool (*element_cmp_func)(Element, Element);
+
+void update_static_set_funcs(Hist hist) {
+    element_clone_func = hist->clone_func;
+    element_free_func = hist->free_func;
+    element_cmp_func = hist->cmp_func;
+}
+
+static Element clone_node_func(Element elem_to_clone) {
+    if (!elem_to_clone) return NULL;
     Node new_node = calloc(sizeof(struct Node), 1);
-    char *p = calloc(strlen(node_elem->e) + 1, 1); //TODO: use clone_func somehow
-    strcpy(p, node_elem->e);
-    new_node->e = p;
-    new_node->count = node_elem->count;
+    new_node->e = element_clone_func(((Node)elem_to_clone)->e);
+    new_node->count = ((Node)elem_to_clone)->count;
     return new_node;
 };
+
+static bool cmp_node_func(Element elem1, Element elem2) {
+    return element_cmp_func(((Node) elem1)->e, ((Node) elem2)->e);
+}
+
+static void free_node_func(Element elem) {
+    element_free_func(((Node) elem)->e);
+    free(elem);
+}
 
 Hist HistCreate(Element (*clone_func)(Element),
                 void (*free_func)(Element),
@@ -47,14 +66,17 @@ Hist HistCreate(Element (*clone_func)(Element),
     }
     //hist->linkedList = LLCreate(clone_func, free_func);
     hist->size = 0;
-    hist->set = SetCreate((Element (*)(Element)) clone_node_func, free, cmp_func);
     hist->clone_func = clone_func;
     hist->free_func = free_func;
     hist->cmp_func = cmp_func;
+    update_static_set_funcs(hist);
+    hist->set = SetCreate(clone_node_func, free_node_func, cmp_node_func);
+
     return hist;
 }
 
 Node getElement(Hist hist, Element e) {
+    update_static_set_funcs(hist);
     Node nextNode = SetFirst(hist->set);
     while (nextNode) {
         if (hist->cmp_func(e, nextNode->e)) {
@@ -66,7 +88,8 @@ Node getElement(Hist hist, Element e) {
 }
 
 // Destroy a histogram object (along with all its elements)
-void HistDestroy(Hist hist) { //TODO: Impl
+void HistDestroy(Hist hist) {
+    update_static_set_funcs(hist);
     SetDestroy(hist->set);
 }
 
@@ -85,12 +108,14 @@ int HistGetCount(Hist hist, Element e) {
 }
 
 bool contains(Hist hist, Element e) {
+    update_static_set_funcs(hist);
     return SetIsIn(hist->set, e);
 }
 
 // Increment the size of e by one.
 // If e is not in hist, create a new entry with a clone of e and a size of 1.
 void HistInc(Hist hist, Element e) {
+    update_static_set_funcs(hist);
     Node node = getElement(hist, e);
     if (node) {
         node->count++;
@@ -104,6 +129,7 @@ void HistInc(Hist hist, Element e) {
     }
     new_node->e = hist->clone_func(e);
     new_node->count = 1;
+
     SetAdd(hist->set, new_node);
     hist->size++;
 }
@@ -112,6 +138,7 @@ void HistInc(Hist hist, Element e) {
 // Gets (a clone of) the element at given index.
 // If index<0 or index >= HistSize(hist) then NULL is returned.
 Element HistGetElement(Hist hist, unsigned int index) {
+    update_static_set_funcs(hist);
     if (index < 0 || index >= HistSize(hist)) {
         return NULL;
     }

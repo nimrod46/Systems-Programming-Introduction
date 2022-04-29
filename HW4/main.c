@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "Hist.h"
+#include "LinkedList.h"
 
 FILE *getFileStreamOrDefByArg(int argc, char *argv[], bool is_read);
 
@@ -27,22 +28,26 @@ int main(int argc, char *argv[]) {
     Hist hist = HistCreate(clone_str, free, cmp_str);
     char *buf = NULL;
     size_t buf_size;
+    LinkedList linkedList = LLCreate(clone_str, free);
     while (getline(&buf, &buf_size, input) != EOF) {
         size_t last_idx = strlen(buf) - 1;
         if (buf[last_idx] == '\n') {
             buf[last_idx] = '\0';
         }
         HistInc(hist, buf);
+        LLAdd(linkedList, LLSize(linkedList), buf);
     }
     free(buf);
     fclose(input);
 
-    for (int i = 0; i < HistSize(hist); ++i) {
-        char *str = HistGetElement(hist, i);//TODO: FIX!
+    while (LLSize(linkedList) != 0) {
+        char *str = LLRemove(linkedList, 0);
         fprintf(output, "%3d %s\n", HistGetCount(hist, str), str);
     }
+
     fclose(output);
     HistDestroy(hist);
+    LLDestroy(linkedList);
 }
 
 FILE *getFileStreamOrDefByArg(int argc, char *argv[], bool is_read) {
