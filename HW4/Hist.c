@@ -33,30 +33,17 @@ static void (*element_free_func)(Element);
 
 static bool (*element_cmp_func)(Element, Element);
 
-void update_static_set_funcs(Hist hist) {
-    element_clone_func = hist->clone_func;
-    element_free_func = hist->free_func;
-    element_cmp_func = hist->cmp_func;
-}
+//Update functions for updating func pointers, should be called before any Hist operation!
+//This solution is for using the Set impl, it was Shlomo idea!!
+void update_static_set_funcs(Hist hist);
 
-static Element clone_node_func(Element elem_to_clone) {
-    if (!elem_to_clone) return NULL;
-    Node new_node = calloc(sizeof(struct Node), 1);
-    new_node->e = element_clone_func(((Node)elem_to_clone)->e);
-    new_node->count = ((Node)elem_to_clone)->count;
-    return new_node;
-};
+static Node create_node(Element element, int count);
 
-static bool cmp_node_func(Element elem1, Element elem2) {
-    if(!elem1 || !elem2) return !elem1 && !elem2;
-    return element_cmp_func(((Node) elem1)->e, ((Node) elem2)->e);
-}
+static Element clone_node_func(Element elem_to_clone);
 
-static void free_node_func(Element elem) {
-    if(!elem) return;
-    element_free_func(((Node) elem)->e);
-    free(elem);
-}
+static bool cmp_node_func(Element elem1, Element elem2);
+
+static void free_node_func(Element elem);
 
 Hist HistCreate(Element (*clone_func)(Element),
                 void (*free_func)(Element),
@@ -120,15 +107,8 @@ void HistInc(Hist hist, Element e) {
         node->count++;
         return;
     }
-    Node new_node = calloc(sizeof(struct Node), 1); //TODO: FIX code duplication with clone_node_func
-    if (!new_node) {
-        fprintf(stderr, "%s/%u: failed to allocate %lu bytes\n\n",
-                __FILE__, __LINE__, sizeof(struct Hist));
-        exit(-1);
-    }
-    new_node->e = hist->clone_func(e);
-    new_node->count = 1;
 
+    Node new_node = create_node(e, 1);
     SetAdd(hist->set, new_node);
     hist->size++;
 }
@@ -152,4 +132,33 @@ Element HistGetElement(Hist hist, unsigned int index) {
         n++;
     }
     return NULL;
+}
+
+void update_static_set_funcs(Hist hist) {
+    element_clone_func = hist->clone_func;
+    element_free_func = hist->free_func;
+    element_cmp_func = hist->cmp_func;
+}
+
+Node create_node(Element element, int count) {
+    Node new_node = calloc(sizeof(struct Node), 1);
+    new_node->e = element_clone_func(element);
+    new_node->count = count;
+    return new_node;
+}
+
+Element clone_node_func(Element elem_to_clone) {
+    if (!elem_to_clone) return NULL;
+    return create_node(((Node)elem_to_clone)->e, ((Node)elem_to_clone)->count);
+}
+
+bool cmp_node_func(Element elem1, Element elem2) {
+    if(!elem1 || !elem2) return !elem1 && !elem2;
+    return element_cmp_func(((Node) elem1)->e, ((Node) elem2)->e);
+}
+
+void free_node_func(Element elem) {
+    if(!elem) return;
+    element_free_func(((Node) elem)->e);
+    free(elem);
 }
