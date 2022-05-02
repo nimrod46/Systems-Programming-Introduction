@@ -80,10 +80,12 @@ static bool cmp_str(Element str_elem_1, Element str_elem_2) {
 static void test_str_set() {
     Hist hist = HistCreate(clone_str, free, cmp_str);
     assert(HistSize(hist) == 0);
+    assert(hist_size(hist) == 0);
     HistInc(hist, "");
     HistInc(hist, "abc");
     HistInc(hist, "def");
     assert(HistSize(hist) == 3);
+    assert(hist_size(hist) == 3);
     assert(HistGetCount(hist, "abc") == 1);
     assert(HistGetCount(hist, "") == 1);
     assert(HistGetCount(hist, "ABC") == 0);

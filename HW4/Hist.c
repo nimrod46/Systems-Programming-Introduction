@@ -26,6 +26,7 @@ struct Hist {
     Set set;
 };
 
+//Static pointers for synchronizing current element clone, cmp and free functions
 static Element (*element_clone_func)(Element);
 
 static void (*element_free_func)(Element);
@@ -76,7 +77,8 @@ Hist HistCreate(Element (*clone_func)(Element),
     return hist;
 }
 
-Node getElement(Hist hist, Element e) {
+//Returns Node from hist by Element to compare, NULL when none exists
+Node getNodeByElement(Hist hist, Element e) {
     update_static_set_funcs(hist);
     Node nextNode = SetFirst(hist->set);
     while (nextNode) {
@@ -92,6 +94,7 @@ Node getElement(Hist hist, Element e) {
 void HistDestroy(Hist hist) {
     update_static_set_funcs(hist);
     SetDestroy(hist->set);
+    free(hist);
 }
 
 // Return the number of elements in the hist object
@@ -101,28 +104,23 @@ unsigned int HistSize(Hist hist) {
 
 // Get the size of element e. If e is not in hist, returns 0.
 int HistGetCount(Hist hist, Element e) {
-    Node node = getElement(hist, e);
+    Node node = getNodeByElement(hist, e);
     if (node) {
         return node->count;
     }
     return 0;
 }
 
-bool contains(Hist hist, Element e) {
-    update_static_set_funcs(hist);
-    return SetIsIn(hist->set, e);
-}
-
 // Increment the size of e by one.
 // If e is not in hist, create a new entry with a clone of e and a size of 1.
 void HistInc(Hist hist, Element e) {
     update_static_set_funcs(hist);
-    Node node = getElement(hist, e);
+    Node node = getNodeByElement(hist, e);
     if (node) {
         node->count++;
         return;
     }
-    Node new_node = calloc(sizeof(struct Node), 1);
+    Node new_node = calloc(sizeof(struct Node), 1); //TODO: FIX code duplication with clone_node_func
     if (!new_node) {
         fprintf(stderr, "%s/%u: failed to allocate %lu bytes\n\n",
                 __FILE__, __LINE__, sizeof(struct Hist));
