@@ -11,7 +11,7 @@ struct Set {
     Element (*clone_func)(Element);
     void (*free_func)(Element);
     bool (*cmp_func)(Element, Element);
-};  
+};
 
 
 Set SetCreate(Element (*clone_func)(Element),

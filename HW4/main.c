@@ -20,35 +20,35 @@ static bool cmp_str(Element int_elem_1, Element int_elem_2) {
     return strcmp(int_elem_1, int_elem_2) == 0;
 }
 
-int main(int argc, char *argv[]) {
-    setbuf(stdout, NULL);
-    FILE *input = getFileStreamOrDefByArg(argc, argv, true);
-    FILE *output = getFileStreamOrDefByArg(--argc, ++argv, false);
-
-    Hist hist = HistCreate(clone_str, free, cmp_str);
-    char *buf = NULL;
-    size_t buf_size;
-    LinkedList linkedList = LLCreate(clone_str, free);
-    while (getline(&buf, &buf_size, input) != EOF) {
-        size_t last_idx = strlen(buf) - 1;
-        if (buf[last_idx] == '\n') {
-            buf[last_idx] = '\0';
-        }
-        HistInc(hist, buf);
-        LLAdd(linkedList, LLSize(linkedList), buf);
-    }
-    free(buf);
-    fclose(input);
-
-    while (LLSize(linkedList) != 0) {
-        char *str = LLRemove(linkedList, 0);
-        fprintf(output, "%3d %s\n", HistGetCount(hist, str), str);
-    }
-
-    fclose(output);
-    HistDestroy(hist);
-    LLDestroy(linkedList);
-}
+//int main(int argc, char *argv[]) {
+//    setbuf(stdout, NULL);
+//    FILE *input = getFileStreamOrDefByArg(argc, argv, true);
+//    FILE *output = getFileStreamOrDefByArg(--argc, ++argv, false);
+//
+//    Hist hist = HistCreate(clone_str, free, cmp_str);
+//    char *buf = NULL;
+//    size_t buf_size;
+//    LinkedList linkedList = LLCreate(clone_str, free);
+//    while (getline(&buf, &buf_size, input) != EOF) {
+//        size_t last_idx = strlen(buf) - 1;
+//        if (buf[last_idx] == '\n') {
+//            buf[last_idx] = '\0';
+//        }
+//        HistInc(hist, buf);
+//        LLAdd(linkedList, LLSize(linkedList), buf);
+//    }
+//    free(buf);
+//    fclose(input);
+//
+//    while (LLSize(linkedList) != 0) {
+//        char *str = LLRemove(linkedList, 0);
+//        fprintf(output, "%3d %s\n", HistGetCount(hist, str), str);
+//    }
+//
+//    fclose(output);
+//    HistDestroy(hist);
+//    LLDestroy(linkedList);
+//}
 
 FILE *getFileStreamOrDefByArg(int argc, char *argv[], bool is_read) {
     if (argc <= 1 || *argv[1] == '-') {
