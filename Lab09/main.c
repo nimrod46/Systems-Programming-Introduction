@@ -7,7 +7,7 @@
 #include <stdio.h>
 #include "Stack.h"
 
-static Element clone_int(Element double_elem) {
+static Element clone_double(Element double_elem) {
     if (!double_elem) return NULL;
     double *p = malloc(sizeof(double));
     *p = *((double *) double_elem);
@@ -15,7 +15,7 @@ static Element clone_int(Element double_elem) {
 };
 
 int main() {
-    Stack s = StackCraete(clone_int, free);
+    Stack s = StackCraete(clone_double, free);
     for (int i = 0; i <= 10; ++i) {
         double d = sqrt(i);
         StackPush(s, &d);
