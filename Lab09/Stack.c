@@ -34,7 +34,7 @@ void StackPush(Stack stack, Element e) {
         fprintf(stderr, "Stack overflow error!");
         exit(1);
     }
-    stack->index = stack->index+1;
+    stack->index++;
     stack->elements[stack->index] = stack->cpy(e);
 }
 
@@ -43,7 +43,7 @@ Element StackPop(Stack stack) {
         return NULL;
     }
     Element e = stack->elements[stack->index];
-    stack->index = stack->index-1;
+    stack->index--;
     return e;
 }
 
