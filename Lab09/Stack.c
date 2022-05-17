@@ -6,8 +6,10 @@
 //
 // Created by nimrod on 17-May-22.
 //
+#define MAX_STACK_SIZE 1024
+
 struct Stack {
-    Element elements[1024];
+    Element elements[MAX_STACK_SIZE];
     int index;
 
     Element (*cpy)(Element);
