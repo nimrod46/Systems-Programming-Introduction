@@ -14,14 +14,14 @@ static Element clone_double(Element double_elem) {
     return p;
 };
 
-int main() {
-    Stack s = StackCraete(clone_double, free);
-    for (int i = 0; i <= 10; ++i) {
-        double d = sqrt(i);
-        StackPush(s, &d);
-    }
-
-    while(!StackIsEmpty(s)) {
-        printf("%f\n", *((double *)StackPop(s)));
-    }
-}
+//int main() {
+//    Stack s = StackCraete(clone_double, free);
+//    for (int i = 0; i <= 10; ++i) {
+//        double d = sqrt(i);
+//        StackPush(s, &d);
+//    }
+//
+//    while(!StackIsEmpty(s)) {
+//        printf("%f\n", *((double *)StackPop(s)));
+//    }
+//}
