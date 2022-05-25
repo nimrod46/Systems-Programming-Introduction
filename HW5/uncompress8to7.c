@@ -6,7 +6,7 @@
 void runUncomp(const char input[], const char output[]) {
     FILE *input_file = fopen(input, "r");
     FILE *output_file = fopen(output, "wb");
-    uint64_t MAGIC;
+    uint64_t MAGIC; //TODO: validate
     uint64_t size;
     fread(&MAGIC, sizeof(MAGIC), 1 , input_file);
     fread(&size, sizeof(size), 1 , input_file);
