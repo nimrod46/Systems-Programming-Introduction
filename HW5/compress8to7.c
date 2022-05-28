@@ -2,10 +2,11 @@
 // Created by nimrod on 25-May-22.
 //
 #include <stdio.h>
+#include <stdlib.h>
 
 #define MAGIC 0x0087008700870087ll
 
-uint64_t write_as_7to8(FILE *input_file, FILE *output_file) {
+uint64_t write_8to7(FILE *input_file, FILE *output_file) {
     uint64_t size = 0;
     unsigned int c;
     int shift = 1;
@@ -39,14 +40,23 @@ uint64_t write_as_7to8(FILE *input_file, FILE *output_file) {
 
 void runComp(const char input_file_name[], const char output_file_name[]) {
     FILE *input_file = fopen(input_file_name, "r");
+    if(!input_file) {
+        fprintf(stderr, "%s/%u: File %s not found! \n\n",
+                __FILE__, __LINE__, input_file_name);
+        exit(-1);
+    }
     FILE *output_file = fopen(output_file_name, "wb");
-
+    if(!output_file) {
+        fprintf(stderr, "%s/%u: Failed creating a file: %s \n\n",
+                __FILE__, __LINE__, output_file_name);
+        exit(-1);
+    }
     uint64_t size = 0;
     uint64_t magic = MAGIC;
     fwrite(&magic, sizeof magic, 1, output_file);
     fwrite(&size, sizeof size, 1, output_file);
 
-    size = write_as_7to8(input_file, output_file);
+    size = write_8to7(input_file, output_file);
 
     fclose(input_file);
     fseek(output_file, 64 / 8, SEEK_SET); //move cursor to after MAGIC value
@@ -54,8 +64,8 @@ void runComp(const char input_file_name[], const char output_file_name[]) {
     fclose(output_file);
 }
 
-//int main(int argc, char *argv[]) {
-//    char *input = argv[1];
-//    char *output = argv[2];
-//    runComp(input, output);
-//}
+int main(int argc, char *argv[]) {
+    char *input = argv[1];
+    char *output = argv[2];
+    runComp(input, output);
+}

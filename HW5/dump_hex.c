@@ -7,14 +7,17 @@
 // Created by nimrod on 23-May-22.
 //
 
-void print_hex(int c) {
-    printf("%02x", c);
+void print_hex(const char padding[], int chr) {
+    char format[5] = {};
+    strcat(format, "%");
+    strcat(format, padding);
+    strcat(format, "x");
+    printf(format, chr);
 }
 
-void run_dump_hex(const char file_name[]) {
-    FILE *input = fopen(file_name, "rb");
+void dump_hex(FILE *input) {
     int byte_count = 0;
-    printf("%07x", byte_count);
+    print_hex("07", byte_count);
     bool is_second_byte = true;
     int prev;
     int c;
@@ -26,28 +29,40 @@ void run_dump_hex(const char file_name[]) {
             continue;
         }
         is_second_byte = true;
-        print_hex(c);
-        print_hex(prev);
+        print_hex("02", c);
+        print_hex("02", prev);
         byte_count += 2;
-        if (byte_count % 16 == 0) {
+        if (byte_count % 16 == 0) { //Current last row is full
             printf("\n");
-            printf("%07x", byte_count);
+            print_hex("07", byte_count);
         }
     }
-    fclose(input);
-    if(!is_second_byte) {
+    if (!is_second_byte) { //Odd number of bytes
         byte_count++;
-        print_hex('\0');
-        print_hex(prev);
+        print_hex("02", '\0');
+        print_hex("02", prev);
     }
-    if(byte_count % 16 != 0) {
+    if (byte_count % 16 != 0) { //Last row isn't full
         printf("\n");
-        printf("%07x", byte_count);
+        print_hex("07", byte_count);
     }
 }
 
-//int main(int argc, char *argv[]) {
-//    run_dump_hex(argv[1]);
-//}
+void run_dump_hex(const char file_name[]) {
+    FILE *input = fopen(file_name, "rb");
+    if (!input) {
+        fprintf(stderr, "%s/%u: File %s not found! \n\n",
+                __FILE__, __LINE__, file_name);
+        exit(-1);
+    }
+
+    dump_hex(input);
+
+    fclose(input);
+}
+
+int main(int argc, char *argv[]) {
+    run_dump_hex(argv[1]);
+}
 
 

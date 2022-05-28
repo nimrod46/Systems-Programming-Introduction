@@ -1,7 +1,12 @@
 //
 // Created by nimrod on 25-May-22.
 //
+/**
+ * FYI: uncompressed data* is data that was never altered
+        decompressed data* is data that has been compressed, then returned to its original state by the process of decompression.
+ */
 #include <stdio.h>
+#include <stdlib.h>
 
 #define MAGIC 0x0087008700870087ll
 
@@ -22,45 +27,57 @@ uint64_t decompress_file(FILE *input_file, FILE *output_file) {
         fputc(new, output_file);
         byte_count++;
 
-        if(shift == 0) {
+        if (shift == 0) {
             shift = 7;
-            if(last_compressed_bits == 0) { //Avoid writing garbage data
+            if (last_compressed_bits == 0) { //Avoid writing garbage data
                 continue;
             }
-            fputc(last_compressed_bits, output_file); //New byte? so "last_compressed_bits" should contain the nex char, lets print it!
-            last_compressed_bits= 0; //And reset it....
+            fputc(last_compressed_bits,
+                  output_file); //New byte? so "last_compressed_bits" should contain the nex char, lets print it!
+            last_compressed_bits = 0; //And reset it....
             byte_count++; //And ofc count it
         }
     }
     return byte_count;
 }
 
-void runDecomp(const char input[], const char output[]) {
-    FILE *input_file = fopen(input, "r");
-    FILE *output_file = fopen(output, "wb");
+void run_decompress(const char input_file_name[], const char output_file_name[]) {
+    FILE *input_file = fopen(input_file_name, "r");
+    if (!input_file) {
+        fprintf(stderr, "%s/%u: File %s not found! \n\n",
+                __FILE__, __LINE__, input_file_name);
+        exit(-1);
+    }
+    FILE *output_file = fopen(output_file_name, "wb");
+    if (!output_file) {
+        fprintf(stderr, "%s/%u: Failed creating a file: %s \n\n",
+                __FILE__, __LINE__, output_file_name);
+        exit(-1);
+    }
+
     uint64_t magic;
     uint64_t original_file_size;
-    fread(&magic, sizeof(magic), 1 , input_file);
-    if(magic != MAGIC) {
-        fprintf(stderr, "%s/%u: Header does not match! Make sure you are trying to decompress a valid 8to7 compress file\n\n",
+    fread(&magic, sizeof(magic), 1, input_file);
+
+    if (magic != MAGIC) {
+        fprintf(stderr,
+                "%s/%u: Header does not match! Make sure you are trying to decompress a valid 8to7 compressed file\n\n",
                 __FILE__, __LINE__);
-        return;
+        exit(-1);
     }
-    fread(&original_file_size, sizeof(original_file_size), 1 , input_file);
+    fread(&original_file_size, sizeof(original_file_size), 1, input_file);
 
     uint64_t byte_count = decompress_file(input_file, output_file);
 
-    if(original_file_size != byte_count) {
+    if (original_file_size != byte_count) {
         fprintf(stderr, "%s/%u: File size does not match!\n\n",
                 __FILE__, __LINE__);
     }
 }
 
-
-
-//int main(int argc, char *argv[]) {
-//    char *input = argv[1];
-//    char *output = argv[2];
-//    runDecomp(input, output);
-//    return 0;
-//}
+int main(int argc, char *argv[]) {
+    char *input = argv[1];
+    char *output = argv[2];
+    run_decompress(input, output);
+    return 0;
+}
