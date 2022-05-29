@@ -43,11 +43,32 @@ unsigned int turn_on_high_bits(unsigned int n, unsigned int index) {
 //  0
 unsigned int reverse_bits(unsigned int n) {
     unsigned int new = 0;
-    int size = sizeof (unsigned int) * 8;
+    int size = sizeof(unsigned int) * 8;
     for (int i = 0; i < size; ++i) {
         unsigned int l = n & (1 << (i));
         new = new << 1;
-        new = new | (l>>i);
+        new = new | (l >> i);
+    }
+    return new;
+}
+
+bool get_bit(unsigned char *arr, unsigned int index) {
+    unsigned int array_index = index / 8;
+    unsigned int bit_index = index % 7;
+    return (1 << bit_index) & arr[array_index];
+}
+
+unsigned int create_largest(unsigned int n) {
+    unsigned int new = 0;
+    unsigned int current_bit_index = sizeof(unsigned int) * 8 - 1;
+    for (int i = 0; i < sizeof(unsigned int) * 8; ++i) {
+        if (((1 << i) & n)) {
+            new |= 1 << current_bit_index ;
+            current_bit_index--;
+        }
+    }
+    if(new % 2 != 0) {
+        return 0;
     }
     return new;
 }
@@ -55,12 +76,18 @@ unsigned int reverse_bits(unsigned int n) {
 
 int main() {
     assert(check_bit(0x9, 3));
+
     assert(even_bits(9) == 1);
     assert(even_bits(8) == 0);
-    printf("%d\n", flip_even_bits(8));
-    printf("%d\n", turn_on_high_bits(8, 5));
-    printf("%d\n", reverse_bits(1));
 
-    //assert(flip_even_bits(8) == 8);
-    //assert(flip_even_bits(9) == 8);
+    //"0" = 00110000
+    unsigned char arr[40] = "000";
+    assert(get_bit(arr, 5));
+    assert(get_bit(arr, 12));
+
+    assert(create_largest(12) == (3 << 30));//12 = (1100), 3 = (011)
+    assert(create_largest(5) == (3 << 30));//5 = (101)
+    assert(create_largest(11) == (7 << 29));//11 = (1011), 7 = (111)
+    assert(create_largest(7) == (7 << 29));
+    assert(create_largest(0xFFFFFFFF) == 0);
 }
