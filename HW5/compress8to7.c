@@ -64,8 +64,8 @@ void runComp(const char input_file_name[], const char output_file_name[]) {
     fclose(output_file);
 }
 
-int main(int argc, char *argv[]) {
-    char *input = argv[1];
-    char *output = argv[2];
-    runComp(input, output);
-}
+//int main(int argc, char *argv[]) {
+//    char *input = argv[1];
+//    char *output = argv[2];
+//    runComp(input, output);
+//}

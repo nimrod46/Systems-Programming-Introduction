@@ -53,14 +53,14 @@ unsigned int reverse_bits(unsigned int n) {
 }
 
 
-//int main() {
-//    assert(check_bit(0x9, 3));
-//    assert(even_bits(9) == 1);
-//    assert(even_bits(8) == 0);
-//    printf("%d\n", flip_even_bits(8));
-//    printf("%d\n", turn_on_high_bits(8, 5));
-//    printf("%d\n", reverse_bits(1));
-//
-//    //assert(flip_even_bits(8) == 8);
-//    //assert(flip_even_bits(9) == 8);
-//}
+int main() {
+    assert(check_bit(0x9, 3));
+    assert(even_bits(9) == 1);
+    assert(even_bits(8) == 0);
+    printf("%d\n", flip_even_bits(8));
+    printf("%d\n", turn_on_high_bits(8, 5));
+    printf("%d\n", reverse_bits(1));
+
+    //assert(flip_even_bits(8) == 8);
+    //assert(flip_even_bits(9) == 8);
+}

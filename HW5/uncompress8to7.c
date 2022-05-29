@@ -75,9 +75,9 @@ void run_decompress(const char input_file_name[], const char output_file_name[])
     }
 }
 
-int main(int argc, char *argv[]) {
-    char *input = argv[1];
-    char *output = argv[2];
-    run_decompress(input, output);
-    return 0;
-}
+//int main(int argc, char *argv[]) {
+//    char *input = argv[1];
+//    char *output = argv[2];
+//    run_decompress(input, output);
+//    return 0;
+//}

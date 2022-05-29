@@ -61,8 +61,8 @@ void run_dump_hex(const char file_name[]) {
     fclose(input);
 }
 
-int main(int argc, char *argv[]) {
-    run_dump_hex(argv[1]);
-}
+//int main(int argc, char *argv[]) {
+//    run_dump_hex(argv[1]);
+//}
 
 
