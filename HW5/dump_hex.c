@@ -61,12 +61,12 @@ void run_dump_hex_on_file(const char file_name[]) {
     fclose(input);
 }
 
-int main(int argc, char *argv[]) {
-    if(argc != 2) {
-        fprintf(stderr, "Illegal arguments! Usage: dump_hex <input_file_name>");
-        exit(-1);
-    }
-    run_dump_hex_on_file(argv[1]);
-}
+//int main(int argc, char *argv[]) {
+//    if(argc != 2) {
+//        fprintf(stderr, "Illegal arguments! Usage: dump_hex <input_file_name>");
+//        exit(-1);
+//    }
+//    run_dump_hex_on_file(argv[1]);
+//}
 
 

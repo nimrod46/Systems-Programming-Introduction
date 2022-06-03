@@ -77,14 +77,14 @@ void run_decompress_on_file(const char input_file_name[], const char output_file
     }
 }
 
-int main(int argc, char *argv[]) {
-    if(argc != 3) {
-        fprintf(stderr, "Illegal arguments! Usage: uncompress8to7 <input_file_name> <output_file_name>");
-        exit(-1);
-    }
-
-    char *input = argv[1];
-    char *output = argv[2];
-    run_decompress_on_file(input, output);
-    return 0;
-}
+//int main(int argc, char *argv[]) {
+//    if(argc != 3) {
+//        fprintf(stderr, "Illegal arguments! Usage: uncompress8to7 <input_file_name> <output_file_name>");
+//        exit(-1);
+//    }
+//
+//    char *input = argv[1];
+//    char *output = argv[2];
+//    run_decompress_on_file(input, output);
+//    return 0;
+//}
