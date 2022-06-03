@@ -1,11 +1,11 @@
+// Nimrod Machlav - 315230185
+// Dany Reznik - 205953821
+//
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
 #include <stdlib.h>
 
-//
-// Created by nimrod on 23-May-22.
-//
 
 void print_hex(const char padding[], int chr) {
     char format[5] = {};
@@ -48,7 +48,7 @@ void dump_hex(FILE *input) {
     }
 }
 
-void run_dump_hex(const char file_name[]) {
+void run_dump_hex_on_file(const char file_name[]) {
     FILE *input = fopen(file_name, "rb");
     if (!input) {
         fprintf(stderr, "%s/%u: File %s not found! \n\n",
@@ -61,8 +61,12 @@ void run_dump_hex(const char file_name[]) {
     fclose(input);
 }
 
-//int main(int argc, char *argv[]) {
-//    run_dump_hex(argv[1]);
-//}
+int main(int argc, char *argv[]) {
+    if(argc != 2) {
+        fprintf(stderr, "Illegal arguments! Usage: dump_hex <input_file_name>");
+        exit(-1);
+    }
+    run_dump_hex_on_file(argv[1]);
+}
 
 

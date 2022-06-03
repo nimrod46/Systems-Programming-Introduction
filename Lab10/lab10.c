@@ -74,20 +74,20 @@ unsigned int create_largest(unsigned int n) {
 }
 
 
-int main() {
-    assert(check_bit(0x9, 3));
-
-    assert(even_bits(9) == 1);
-    assert(even_bits(8) == 0);
-
-    //"0" = 00110000
-    unsigned char arr[40] = "000";
-    assert(get_bit(arr, 5));
-    assert(get_bit(arr, 12));
-
-    assert(create_largest(12) == (3 << 30));//12 = (1100), 3 = (011)
-    assert(create_largest(5) == (3 << 30));//5 = (101)
-    assert(create_largest(11) == (7 << 29));//11 = (1011), 7 = (111)
-    assert(create_largest(7) == (7 << 29));
-    assert(create_largest(0xFFFFFFFF) == 0);
-}
+//int main() {
+//    assert(check_bit(0x9, 3));
+//
+//    assert(even_bits(9) == 1);
+//    assert(even_bits(8) == 0);
+//
+//    //"0" = 00110000
+//    unsigned char arr[40] = "000";
+//    assert(get_bit(arr, 5));
+//    assert(get_bit(arr, 12));
+//
+//    assert(create_largest(12) == (3 << 30));//12 = (1100), 3 = (011)
+//    assert(create_largest(5) == (3 << 30));//5 = (101)
+//    assert(create_largest(11) == (7 << 29));//11 = (1011), 7 = (111)
+//    assert(create_largest(7) == (7 << 29));
+//    assert(create_largest(0xFFFFFFFF) == 0);
+//}

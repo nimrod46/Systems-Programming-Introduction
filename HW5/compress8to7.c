@@ -1,5 +1,5 @@
-//
-// Created by nimrod on 25-May-22.
+// Nimrod Machlav - 315230185
+// Dany Reznik - 205953821
 //
 #include <stdio.h>
 #include <stdlib.h>
@@ -38,7 +38,7 @@ uint64_t write_8to7(FILE *input_file, FILE *output_file) {
     return size;
 }
 
-void runComp(const char input_file_name[], const char output_file_name[]) {
+void run_comp_on_file(const char input_file_name[], const char output_file_name[]) {
     FILE *input_file = fopen(input_file_name, "r");
     if(!input_file) {
         fprintf(stderr, "%s/%u: File %s not found! \n\n",
@@ -64,8 +64,12 @@ void runComp(const char input_file_name[], const char output_file_name[]) {
     fclose(output_file);
 }
 
-//int main(int argc, char *argv[]) {
-//    char *input = argv[1];
-//    char *output = argv[2];
-//    runComp(input, output);
-//}
+int main(int argc, char *argv[]) {
+    if(argc != 3) {
+        fprintf(stderr, "Illegal arguments! Usage: compress8to7 <input_file_name> <output_file_name>");
+        exit(-1);
+    }
+    char *input = argv[1];
+    char *output = argv[2];
+    run_comp_on_file(input, output);
+}

@@ -1,5 +1,5 @@
-//
-// Created by nimrod on 25-May-22.
+// Nimrod Machlav - 315230185
+// Dany Reznik - 205953821
 //
 /**
  * FYI: uncompressed data* is data that was never altered
@@ -41,7 +41,7 @@ uint64_t decompress_file(FILE *input_file, FILE *output_file) {
     return byte_count;
 }
 
-void run_decompress(const char input_file_name[], const char output_file_name[]) {
+void run_decompress_on_file(const char input_file_name[], const char output_file_name[]) {
     FILE *input_file = fopen(input_file_name, "r");
     if (!input_file) {
         fprintf(stderr, "%s/%u: File %s not found! \n\n",
@@ -68,6 +68,8 @@ void run_decompress(const char input_file_name[], const char output_file_name[])
     fread(&original_file_size, sizeof(original_file_size), 1, input_file);
 
     uint64_t byte_count = decompress_file(input_file, output_file);
+    fclose(output_file);
+    fclose(input_file);
 
     if (original_file_size != byte_count) {
         fprintf(stderr, "%s/%u: File size does not match!\n\n",
@@ -75,9 +77,14 @@ void run_decompress(const char input_file_name[], const char output_file_name[])
     }
 }
 
-//int main(int argc, char *argv[]) {
-//    char *input = argv[1];
-//    char *output = argv[2];
-//    run_decompress(input, output);
-//    return 0;
-//}
+int main(int argc, char *argv[]) {
+    if(argc != 3) {
+        fprintf(stderr, "Illegal arguments! Usage: uncompress8to7 <input_file_name> <output_file_name>");
+        exit(-1);
+    }
+
+    char *input = argv[1];
+    char *output = argv[2];
+    run_decompress_on_file(input, output);
+    return 0;
+}
