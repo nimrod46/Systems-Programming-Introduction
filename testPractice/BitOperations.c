@@ -29,7 +29,18 @@ unsigned int switch_ends (unsigned int n, unsigned int i) {
     return ((n & mask1) << (32-i)) | ((n & mask2) >> (32-i)) | (n & mask3);
 }
 
+
+void print_octal2(unsigned int n) {
+    for(int i=30; i>=0; i-=3) {
+        unsigned char x = ((n >> i) & 0x7);
+        printf("%d", x);
+    }
+    printf("\n");
+}
+
 int main() {
     printf("%u\n", switch_m_bits(142, 3));
     printf("%u\n", switch_ends(142, 3));
+
+    print_octal2(10);
 }
