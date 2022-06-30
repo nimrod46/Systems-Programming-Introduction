@@ -22,9 +22,9 @@ char* get_song_lyrics (const char* f){
     return s;
 }
 
-int main () {
-
-    MusicLib ml = MLCreate(get_song_name, get_song_lyrics);
-    MLAdd(ml, "s");
-    MLPrintLyrics(ml,"name");
-}
+//int main () {
+//
+//    MusicLib ml = MLCreate(get_song_name, get_song_lyrics);
+//    MLAdd(ml, "s");
+//    MLPrintLyrics(ml,"name");
+//}
