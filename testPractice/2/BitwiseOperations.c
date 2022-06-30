@@ -43,13 +43,13 @@ int compressed_strlen(const char* c) {
 }
 
 
-int main() {
-    char s[] = "1234  ";
-    char *c = compress(s);
-    int len = compressed_strlen(c);
-    printf("%d\n", len);
-    for (int i = 0; i < len / 2; ++i) {
-        printf("%x\n", c[i]);
-    }
-    return 0;
-}
+//int main() {
+//    char s[] = "1234  ";
+//    char *c = compress(s);
+//    int len = compressed_strlen(c);
+//    printf("%d\n", len);
+//    for (int i = 0; i < len / 2; ++i) {
+//        printf("%x\n", c[i]);
+//    }
+//    return 0;
+//}
