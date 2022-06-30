@@ -75,13 +75,13 @@ char** split2(const char* str, char delimiter) {
     return arr;
 }
 
-int main () {
-    //printf("%d", longest_line("C:\\Users\\nimrod\\Documents\\GitHub\\Systems-Programming-Introduction\\cmake-build-debug\\.ninja_log"));
-    //printf("nu,: %d", num_items("Hello:World",':'));
-    unsigned int len = num_items(":Hello:World",':');
-    printf("num: %d\n", len);
-    char** arr = split2("k:Hello:World",':');
-    for (int i = 0; i < len; ++i) {
-        printf("%s\n", arr[i]);
-    }
-}
+//int main () {
+//    //printf("%d", longest_line("C:\\Users\\nimrod\\Documents\\GitHub\\Systems-Programming-Introduction\\cmake-build-debug\\.ninja_log"));
+//    //printf("nu,: %d", num_items("Hello:World",':'));
+//    unsigned int len = num_items(":Hello:World",':');
+//    printf("num: %d\n", len);
+//    char** arr = split2("k:Hello:World",':');
+//    for (int i = 0; i < len; ++i) {
+//        printf("%s\n", arr[i]);
+//    }
+
