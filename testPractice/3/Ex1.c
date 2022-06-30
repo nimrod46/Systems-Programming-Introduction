@@ -90,13 +90,12 @@ char *replace(const char *sSource, unsigned int nSearch, unsigned int nReplace) 
     unsigned int res_size = sSource_size + nReplace_size - nSearch_size;
     char *res = calloc(res_size + 1, sizeof(char));
 
-    for (unsigned int i = 0; i < des_index; i++) {
-        res[i] = sSource[i];
-    }
+    strncpy(res, sSource, des_index);
 
     sprintf(res + des_index, "%d", nReplace);
 
     strcpy(res + des_index + nReplace_size, sSource + des_index + nSearch_size);
+
     return res;
 }
 
