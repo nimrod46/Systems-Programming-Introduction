@@ -38,9 +38,9 @@ void print_octal2(unsigned int n) {
     printf("\n");
 }
 
-int main() {
-    printf("%u\n", switch_m_bits(142, 3));
-    printf("%u\n", switch_ends(142, 3));
-
-    print_octal2(10);
-}
+//int main() {
+//    printf("%u\n", switch_m_bits(142, 3));
+//    printf("%u\n", switch_ends(142, 3));
+//
+//    print_octal2(10);
+//}

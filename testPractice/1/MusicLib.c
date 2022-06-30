@@ -2,7 +2,7 @@
 #include <string.h>
 #include <stdio.h>
 #include "MusicLib.h"
-#include "../HW4/Set.h"
+#include "../../HW4/Set.h"
 
 struct MusicLib {
     Set set;
