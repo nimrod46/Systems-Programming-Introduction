@@ -41,14 +41,14 @@ int* divided_by(int* s1, unsigned int n1, int* s2, unsigned int n2){
 }
 
 
-int main() {
-    //char c[] = "r123rrr456r";
-    //remove_charr(c, 'r');
-    //printf("%s", c);
-    int s1[] = {1, 10, 5, 4, 21, 49, 24}, s2[] = {2, 3};
-
-    int* arr = divided_by(s1, 7, s2, 2);
-    for (int i = 0; i < 7; ++i) {
-        printf("%d", arr[i]);
-    }
-}
+//int main() {
+//    //char c[] = "r123rrr456r";
+//    //remove_charr(c, 'r');
+//    //printf("%s", c);
+//    int s1[] = {1, 10, 5, 4, 21, 49, 24}, s2[] = {2, 3};
+//
+//    int* arr = divided_by(s1, 7, s2, 2);
+//    for (int i = 0; i < 7; ++i) {
+//        printf("%d", arr[i]);
+//    }
+//}
