@@ -9,9 +9,9 @@ bool test_n (unsigned int n){
     return !(n & 1) && (n & mask);
 }
 
-int main() {
-    printf("%s\n", test_n(15) ? "true" : "false");
-    printf("%s\n", test_n(16) ? "true" : "false");
-    printf("%s\n", test_n(27) ? "true" : "false");
-    printf("%s\n", test_n(30) ? "true" : "false");
-}
+//int main() {
+//    printf("%s\n", test_n(15) ? "true" : "false");
+//    printf("%s\n", test_n(16) ? "true" : "false");
+//    printf("%s\n", test_n(27) ? "true" : "false");
+//    printf("%s\n", test_n(30) ? "true" : "false");
+//}
