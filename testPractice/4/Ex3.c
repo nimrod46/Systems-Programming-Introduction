@@ -35,6 +35,6 @@ unsigned int flip_hex(unsigned int n) {
     return new;
 }
 
-int main() {
-    printf("%0x", flip_hex(4660));
-}
+//int main() {
+//    printf("%0x", flip_hex(4660));
+//}
