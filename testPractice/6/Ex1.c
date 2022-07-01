@@ -22,12 +22,12 @@ bool bt(void* e1, void* e2) {
     return *(int*) e1 > *(int*) e2;
 }
 
-int main() {
-
-
-    int i1 = 10;
-    int i2 = 7;
-    int i3 = 5;
-    int *arr[] = {&i1,&i2,&i3};
-    printf("%d", *(int*)find_max((void**)arr, 4, bt));
-}
+//int main() {
+//
+//
+//    int i1 = 10;
+//    int i2 = 7;
+//    int i3 = 5;
+//    int *arr[] = {&i1,&i2,&i3};
+//    printf("%d", *(int*)find_max((void**)arr, 4, bt));
+//}
