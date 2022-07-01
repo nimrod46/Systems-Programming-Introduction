@@ -99,8 +99,8 @@ char *replace(const char *sSource, unsigned int nSearch, unsigned int nReplace) 
     return res;
 }
 
-
-int main() {
-    printf("%s", replace("fd9ds399", 9, 12));
-    return 1;
-}
+//
+//int main() {
+//    printf("%s", replace("fd9ds399", 9, 12));
+//    return 1;
+//}
