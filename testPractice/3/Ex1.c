@@ -29,6 +29,28 @@ int findocc(const char *s, unsigned int n) {
     return index;
 }
 
+
+
+int findocc2(const char* s1 , unsigned int n ) {
+    int i = 0 ;
+    char buff[50]; //this will be long inough for any int..
+    sprintf (buff , "%d" , n );
+    char *ps1 , *pbuff;
+
+    for ( ; *s1 ; s1++ ) {
+        i++;
+        for ( ps1 = s1 , pbuff = buff ; *ps1 == *pbuff && *ps1 && *pbuff ; ps1++ , pbuff++ );
+        if( !*pbuff )
+            return i;
+    }
+    return -1;
+
+}
+
+
+
+
+
 char *replace1(const char *sSource, unsigned int nSearch, unsigned int nReplace) {
     unsigned int des_index = findocc(sSource, nSearch);
     unsigned int sSource_size = strlen(sSource);
