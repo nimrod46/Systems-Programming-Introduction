@@ -7,27 +7,33 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int findocc(const char *s, unsigned int n) {
-    unsigned int len = strlen(s);
-    int index = -1;
-    unsigned int tmp_n = n;
-    unsigned int offset = 0;
-    for (int i = len - 1; i >= 0; --i) {
-        while (tmp_n != 0 && i - offset >= 0) {
-            if (tmp_n % 10 != (s[i - offset] - '0')) {
-                break;
-            }
-            offset++;
-            tmp_n /= 10;
-        }
-        if (tmp_n == 0) {
-            index = i - offset + 1;
-        }
-        offset = 0;
-        tmp_n = n;
+#include <string.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <stdio.h>
+
+
+
+
+int findocc(const char* s1 , unsigned int n ) {
+    int i = 0 ;
+    char buff[50]; //this will be long inough for any int..
+    sprintf (buff , "%d" , n );
+    char *ps1 , *pbuff;
+
+    for ( ; *s1 ; s1++ ) {
+        i++;
+        for ( ps1 = s1 , pbuff = buff ; *ps1 == *pbuff && *ps1 && *pbuff ; ps1++ , pbuff++ );
+        if( !*pbuff )
+            return i;
     }
-    return index;
+    return -1;
+
 }
+
+
+
+
 
 char *replace1(const char *sSource, unsigned int nSearch, unsigned int nReplace) {
     unsigned int des_index = findocc(sSource, nSearch);
