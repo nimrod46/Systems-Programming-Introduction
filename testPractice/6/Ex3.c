@@ -43,12 +43,12 @@ bool is_permutation(const char *s1, const char *s2) {
 }
 
 
-int main() {
-    int array[15] = {0, 1, 10, 9, 15, 2, 13, 5, 7, 11, 3, 4, 14, 8, 6};
-
-    printf("%d\n", find_missing2(array, 15));
-
-    char *c1 = "you";
-    char *c2 = "you";
-    printf("%s\n", is_permutation(c1, c2) ? "true" : "false");
-}
+//int main() {
+//    int array[15] = {0, 1, 10, 9, 15, 2, 13, 5, 7, 11, 3, 4, 14, 8, 6};
+//
+//    printf("%d\n", find_missing2(array, 15));
+//
+//    char *c1 = "you";
+//    char *c2 = "you";
+//    printf("%s\n", is_permutation(c1, c2) ? "true" : "false");
+//}
