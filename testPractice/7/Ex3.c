@@ -49,4 +49,4 @@ void cycle_byte_array_left2(unsigned char* pb, int pbsize, unsigned int n) {
 //    for (int i = 0; i < 3; ++i) {
 //        assert(c1[i] == c2[i]);
 //    }
-}
+//}
