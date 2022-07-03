@@ -12,6 +12,6 @@ int numOnes(unsigned int n) {
     return count;
 }
 
-int main() {
-    printf("%d", numOnes(5));
-}
+//int main() {
+//    printf("%d", numOnes(5));
+//}
