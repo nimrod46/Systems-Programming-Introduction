@@ -21,7 +21,7 @@ unsigned int createLargest(unsigned int n) {
     return res;
 }
 
-int main() {
-    printf("%u", createLargest(12));
-}
+//int main() {
+//    printf("%u", createLargest(12));
+//}
 
