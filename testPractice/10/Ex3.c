@@ -12,7 +12,7 @@ uint compress_uint(char* array, int array_size) {
     return res;
 }
 
-int main() {
-    char *arr = "101010111";
-    printf("%d", compress_uint(arr, 9));
-}
+//int main() {
+//    char *arr = "101010111";
+//    printf("%d", compress_uint(arr, 9));
+//}
